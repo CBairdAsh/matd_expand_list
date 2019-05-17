@@ -58,7 +58,7 @@ Author: Chris Ash
 						$.matd_expandlist.id = $(this).attr('id');
 					} else {
 						methods.counter++;
-						var _rand = new Date().getUTCMilliseconds() + methods.counter;
+						var _rand = 'r' + (new Date().getTime()) + 'r' + methods.counter;
 						$.matd_expandlist.id = _rand;
 						$(this).attr('id',_rand);
 					}
@@ -121,7 +121,7 @@ Author: Chris Ash
 				} else {
 					methods.counter++;
 					// parent has no id, generate one then use it.
-					 var _rand = new Date().getUTCMilliseconds(); + methods.counter;
+					 var _rand = 'r' + (new Date().getTime()) + 'r' + methods.counter
 					 _prt.attr('id',_rand);
 					 $.matd_expandlist.id = _rand;
 				}
