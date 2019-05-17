@@ -11,23 +11,23 @@ Author: Chris Ash
 
 	$.matd_expandlist = {
 		id: '',
-		toggled: true,
 		color_css_class: '',
 		color_css_style : '',
-		templateString: '<span class="swt_container"><span class="swt_frame" data-flipped="${on_off}"><span class="swt_inner"><span class="swt_dot ${color_css_class}" data-flipped="${on_off}" style="${color_style}"></span><input id="i2usw_${id}" tabindex="0" class="swt_chk" type="checkbox" value="checkedB" checked=""></span><span class="swt_space"></span></span><span class="swt_bar"></span></span>',
+        templateString: '<div class="ex_container flex-base justify-center"><div class="ex_inner">${rows}</div></div>',
+        templateRowString: '<div class="ex_row_frame" style="${override_css}" aria-expanded="false"><div class="ex_hdr_cont flex-base justify-center flex-align-items-cntr" tabindex="0" role="button" aria-expanded="false"><div class="ex_headings flex-base"><p class="marg_z_block typograph ex_head">${heading}</p><p class="marg_z_block typograph ex_sec_head">${secondaryHeading}</p></div><div class="ex_svg_cont" tabindex="-1" role="button" aria-hidden="true"><span class="svg_ctrl"><svg class="svg_style" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path><path fill="none" d="M0 0h24v24H0z"></path></svg></span><span class="svg_frame"></span></div></div><div class="ex_det_con" aria-hidden="true"><div class="flex-base"><div class="w_100p"><div class="flex-base det_pad"><p class="marg_z_block typograph">${details}</p></div></div></div></div></div>',
         existing_id: '',
         orig_input: []
 	};
 
 	  // default values to reset globals between each run. This is in case of multiple uses on a single page.
   var _def = {
-		id: '',
-		toggled: true,
-		color_css_class: '',
-		color_css_style : '',
-		templateString: '<span class="swt_container"><span class="swt_frame" data-flipped="${on_off}"><span class="swt_inner"><span class="swt_dot ${color_css_class}" data-flipped="${on_off}" style="${color_style}"></span><input id="i2usw_${id}" tabindex="0" class="swt_chk" type="checkbox" value="checkedB" checked=""></span><span class="swt_space"></span></span><span class="swt_bar"></span></span>',
-        existing_id: '',
-        orig_input: []
+    id: '',
+    color_css_class: '',
+    color_css_style : '',
+    templateString: '<div class="ex_container flex-base justify-center"><div class="ex_inner">${rows}</div></div>',
+    templateRowString: '<div class="ex_row_frame" style="${override_css}" aria-expanded="false"><div class="ex_hdr_cont flex-base justify-center flex-align-items-cntr" tabindex="0" role="button" aria-expanded="false"><div class="ex_headings flex-base"><p class="marg_z_block typograph ex_head">${heading}</p><p class="marg_z_block typograph ex_sec_head">${secondaryHeading}</p></div><div class="ex_svg_cont" tabindex="-1" role="button" aria-hidden="true"><span class="svg_ctrl"><svg class="svg_style" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path><path fill="none" d="M0 0h24v24H0z"></path></svg></span><span class="svg_frame"></span></div></div><div class="ex_det_con" aria-hidden="true"><div class="flex-base"><div class="w_100p"><div class="flex-base det_pad"><p class="marg_z_block typograph">${details}</p></div></div></div></div></div>',
+    existing_id: '',
+    orig_input: []
 	}
 
 		$.extend($.fn, {
@@ -41,13 +41,13 @@ Author: Chris Ash
 				return _fn.apply(this, _args);
 			} else {
                 // reset to default
-                var _out = I2U21.checkAPI($.matd_expandlist, _def, API);
+                var _out = methods.checkAPI($.matd_expandlist, _def, API);
 				$.matd_expandlist = _out.local;
 				API = _out.API;
 
                 // don't do anything if no params are set
 				if ( _param ) {
-					_out = I2U21.checkAPI($.matd_expandlist, _param, API);
+					_out = methods.checkAPI($.matd_expandlist, _param, API);
 					$.matd_expandlist = _out.local;
 					API = _out.API;
 				}
@@ -58,7 +58,7 @@ Author: Chris Ash
 						$.matd_expandlist.id = $(this).attr('id');
 					} else {
 						methods.counter++;
-						var _rand = I2U21.MD5( I2U21.MD5(new Date() + '') ) + methods.counter;
+						var _rand = new Date().getUTCMilliseconds() + methods.counter;
 						$.matd_expandlist.id = _rand;
 						$(this).attr('id',_rand);
 					}
@@ -121,7 +121,7 @@ Author: Chris Ash
 				} else {
 					methods.counter++;
 					// parent has no id, generate one then use it.
-					 var _rand = I2U21.MD5( I2U21.MD5(new Date() + '') ) + methods.counter;
+					 var _rand = new Date().getUTCMilliseconds(); + methods.counter;
 					 _prt.attr('id',_rand);
 					 $.matd_expandlist.id = _rand;
 				}
@@ -134,7 +134,7 @@ Author: Chris Ash
             }
             return _val;
           },        
-    make_html: function() {
+        make_html: function() {
             $.matd_expandlist.on_off = ( $.matd_expandlist.toggled ? "true" : "false" );
 
             // make sure color style has a leading # if a hex
@@ -145,7 +145,7 @@ Author: Chris Ash
             $.matd_expandlist.color_style = ( ( $.matd_expandlist.color_css_style != '' ) ? 'color: '+$.matd_expandlist.color_css_style+';' : '' );
 
       // this covers the base swaps
-			var _html = I2U21.prp_ct($.matd_expandlist.templateString, $.matd_expandlist);
+			var _html = methods.prp_ct($.matd_expandlist.templateString, $.matd_expandlist);
 			
       return _html;
     },
@@ -186,7 +186,133 @@ Author: Chris Ash
     },
     trigger_evt: function(_who,_trigger, evt) {
 			$('#'+_who).trigger(_trigger,evt);
-		}
+    },
+    checkAPI: function(_local, _param, API) {
+        var _loc_out = {};
 
-	}
+        for (var _idx in _local) {
+            // absorb overrides
+            _loc_out[_idx] = _local[_idx];
+
+            if( _param.hasOwnProperty(_idx) ) {
+                // check if where we're putting the new data is an object / array
+                if ( typeof _loc_out[_idx] == "object" ) {
+
+                    // checking inbound data is object/array. If so, replace like with like
+                    if ( Array.isArray(_loc_out[_idx]) && Array.isArray(_param[_idx]) ) {
+                         _loc_out[_idx] = [];
+                         var _inner_from = _param[_idx],
+                            _inner_to = _loc_out[_idx];
+
+                         for ( var itm=0; itm < _param[_idx].length; itm++ ) {
+                             var _row = _inner_from[itm];
+                             _inner_to.push( _row );
+                         }
+                    } else if ( ( typeof _param[_idx] == "string" ) && ( Array.isArray(_loc_out[_idx]) ) ) {
+                        _loc_out[_idx].push( _param[_idx] );
+                    } else {
+                        _loc_out[_idx] = _param[_idx];
+                    }
+
+                } else {
+                    _loc_out[_idx] = _param[_idx];
+                }
+            }
+        }
+        // check API for overrides. This should be rare
+        methods.each( API, function(_idx, _val) {
+            // absorb overrides
+            if ( _param[_idx] != null ) {
+                API[_idx] = _param[_idx];
+            }
+        });
+        return { "local": _loc_out, "API": API };
+    },
+    prp_ct: function(_template, _data_obj, _alt_obj) {
+        var _nmeObj = /\${([^\}]+)}/i;
+
+        var _loop = true,
+            _fallback_counter = 0;
+
+        if ( _alt_obj ) {
+            _data_obj = _alt_obj;
+        }
+
+        try {
+            do {
+                var reNme = _nmeObj.exec(_template);
+                if (reNme != null && reNme.length > 1) {
+                    var _tag = reNme[1];
+
+                    var _fnc = new Function("_tmpl","_newval","return _tmpl.replace(/\\${"+_tag+"}/ig, _newval);");
+                    _template = _fnc(_template, _data_obj[_tag]);
+                    _fallback_counter++;
+                } else {
+                    _fallback_counter = 10;
+                }
+            } while (  _fallback_counter < 10 );
+        } catch (e) {
+            console.log('[prp_ct] error processing template = '+e);
+        }
+        return _template;
+    },    
+    each: function( obj, callback ) {
+        var length, i = 0;
+
+        if ( methods.isArrayLike( obj ) ) {
+            length = obj.length;
+            for ( ; i < length; i++ ) {
+                if ( callback.call( obj[ i ], i, obj[ i ] ) === false ) {
+                    break;
+                }
+            }
+        } else {
+            for ( i in obj ) {
+                if ( callback.call( obj[ i ], i, obj[ i ] ) === false ) {
+                    break;
+                }
+            }
+        }
+
+        return obj;
+    },
+    type: function( obj ) {
+        if ( obj == null ) {
+            return obj + "";
+        }
+
+        // Support: Android<4.0, iOS<6 (functionish RegExp) because you don't know who has what out there
+        return typeof obj === "object" || typeof obj === "function" ?
+            methods.class2type[ methods.class2type.toString.call( obj ) ] || "object" :
+            typeof obj;
+    },
+    class2type: {},
+    isWindow: function( obj ) {
+        return obj != null && obj === obj.window;
+    },
+    isArrayLike: function( obj ) {
+        // from jQuery 2.2.5
+
+        // Support: iOS 8.2 (not reproducible in simulator)
+        // `in` check used to prevent JIT error (gh-2145)
+        var length = !!obj && "length" in obj && obj.length,
+            type = methods.type( obj );
+
+        if ( type === "function" || methods.isWindow( obj ) ) {
+            return false;
+        }
+
+        return type === "array" || length === 0 ||
+            typeof length === "number" && length > 0 && ( length - 1 ) in obj;
+    }        
+
+    }
+
+    // populate class2type
+    var _names = "Boolean Number String Function Array Date RegExp Object Error Symbol".split( " " );
+    var _nmMax = _names.length;
+    for ( var i=0; i < _nmMax; i++ ){
+        var _entry = _names[i];
+        methods.class2type[ "[object " + _entry + "]" ] = _entry.toLowerCase();
+    }    
 })(jQuery);
