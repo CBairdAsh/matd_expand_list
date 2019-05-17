@@ -73,7 +73,7 @@ Author: Chris Ash
 
 	var API = {
 		debug: function() {
-			console.log($.matd_expandlist);
+			console.log('[debug]',$.matd_expandlist);
 		}
 	};
 
@@ -82,7 +82,7 @@ Author: Chris Ash
 		types: ['checkbox'],
 		startup: function() {
             if ($.matd_expandlist.templateString != '' ) {
-                if ( $('#i2usw_'+$.matd_expandlist.id).length == 0 ) {
+                if ( $('#mtd_'+$.matd_expandlist.id).length == 0 ) {
                         // see if we're absorbing an existing input tag
                         methods.check_target_type();
 
@@ -150,23 +150,23 @@ Author: Chris Ash
       return _html;
     },
     place_ctrl: function(_html) {
-      if ( $('#i2usw_'+$.matd_expandlist.id).length == 0 ) {
+      if ( $('#mtd_'+$.matd_expandlist.id).length == 0 ) {
 				if ( $.matd_expandlist.existing_id != '' ) {
 					$('#'+$.matd_expandlist.id).prepend(_html);
-					var _class = $('#i2usw_'+$.matd_expandlist.id).attr('class');
-					$('#'+$.matd_expandlist.existing_id).clone(true, true).attr('id', $.matd_expandlist.existing_id+'new').addClass(_class).attr('tabIndex','0').attr('autocomplete','on').attr('aria-invalid','false').attr('aria-required','false').insertBefore('#i2usw_'+$.matd_expandlist.id);
+					var _class = $('#mtd_'+$.matd_expandlist.id).attr('class');
+					$('#'+$.matd_expandlist.existing_id).clone(true, true).attr('id', $.matd_expandlist.existing_id+'new').addClass(_class).attr('tabIndex','0').attr('autocomplete','on').attr('aria-invalid','false').attr('aria-required','false').insertBefore('#mtd_'+$.matd_expandlist.id);
 					$('#'+$.matd_expandlist.existing_id).remove();
-					$('#i2usw_'+$.matd_expandlist.id).remove();
+					$('#mtd_'+$.matd_expandlist.id).remove();
 					$('#'+$.matd_expandlist.existing_id+'new').attr('id',$.matd_expandlist.existing_id);
 				} else {
 					$('#'+$.matd_expandlist.id).html(_html);
 				}
       } else {
-        console.log('[matd_expandlist] id: i2usw_'+$.matd_expandlist.id+' is already in place in the DOM. Control not added.');
+        console.log('[matd_expandlist] id: mtd_'+$.matd_expandlist.id+' is already in place in the DOM. Control not added.');
       }
     },
     assign_event: function() {
-      var _what = $('#i2usw_'+$.matd_expandlist.id);
+      var _what = $('#mtd_'+$.matd_expandlist.id);
 			if ( $.matd_expandlist.existing_id != '' ) {
 				_what = $('#'+$.matd_expandlist.existing_id);
 			}
