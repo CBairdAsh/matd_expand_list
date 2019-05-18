@@ -44,7 +44,7 @@ An example would be:
 
 Which can be applied like so:
 
-var _param = {"list":[
+    var _param = {"list":[
 		{"heading":"First row",
 	 	 "secondary_heading": "This is a subheading for row 1",
 		 "details":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."},
