@@ -5,6 +5,7 @@ Javascript / jQuery plugin to create a Material Design expanded list
 
 Created: 5/17/2019
 Author: Chris Ash
+License: MIT License
 
 */
 ;(function($) {
