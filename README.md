@@ -12,35 +12,21 @@ MatD Expanded List has been tested on jQuery 3.3.1 but should work with jQuery 2
 
 ### How to use
 
-		<p>To get started, place the following lines in your web page or application:</p>
-		<pre>
-	
-	 &lt;link rel="stylesheet" href="js/matd_expand_list/src/matd_expandlist.css" type="text/css" media="screen" /&gt;
-	 &lt;script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"&gt;&lt;/script&gt;
-	 &lt;script type="text/javascript" src="js/matd_expand_list/src/.min.js"&gt;&lt;/script&gt;
-		</pre>
-	
-		<p>
-			To use, provide data values for the expanded list options ( see examples below ) and then initiate a call to the control by targeting the zone
-			where the control will be placed:
-	
-			<pre>
-	
-	 $('#test').matd_expandlist(_param);
-			</pre>
-	
-			or via direct function call ( in which the id must be provided in the parameters ):
-	
-			<pre>
-	
-	 $.fn.matd_expandlist(_param);
-			</pre>
+To get started, place the following lines in your web page or application:
 
+    <link rel="stylesheet" href="js/matd_expand_list/matd_expandlist.css" type="text/css" media="screen" />
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="s/matd_expand_list/matd_expand_list.min.js"></script>
 
-##### Syntax
+Then, provide an array of objects that represent the visible areas of the expanded list, with the command targeting the zone the list should appear in. Like so:
 
+$('#test').matd_expandlist({...});
 
+### Option Syntax
 
+There are three main zones to an expanded list: the Header, Subheader and Details. Of these, the header is required.
+
+All three support any type of content, even HTML tags. It is recommended that the rich experience ( images, html, etc ) be reserved for the detail area.
 
 ### License
 
