@@ -149,7 +149,7 @@
 }
 
 .ex_row_frame[aria-expanded=true] {
-    margin-top: 0px 0px 16px 0px;
+    margin: 0px 0px 16px 0px;
 }
 
 .ex_row_frame:first-child {
@@ -282,17 +282,19 @@
 }
 
 .ex_det_con {
-    min-height: 0px; 
     height: 0px;
     transition-duration: 208ms;    
-    overflow: hidden;
     transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.ex_det_con[aria-hidden=true] {
+  overflow:hidden;
+}
+
+.ex_det_con[aria-hidden=false] {
+  overflow: visible;
 }
 
 .expand_marg {
     margin: 16px 0;
-}
-
-.expand_det_area {
-    overflow: visible;
 }

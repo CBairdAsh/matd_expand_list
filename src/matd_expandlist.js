@@ -11,10 +11,9 @@ Author: Chris Ash
 
 	$.matd_expandlist = {
 		id: '',
-		color_css_class: '',
-		color_css_style : '',
-        templateString: '<div class="ex_container flex-base justify-center"><div class="ex_inner">${rows}</div></div>',
-        templateRowString: '<div class="ex_row_frame" style="${override_css}" aria-expanded="false"><div class="ex_hdr_cont flex-base justify-center flex-align-items-cntr" tabindex="0" role="button" aria-expanded="false"><div class="ex_headings flex-base"><p class="marg_z_block typograph ex_head">${heading}</p><p class="marg_z_block typograph ex_sec_head">${secondaryHeading}</p></div><div class="ex_svg_cont" tabindex="-1" role="button" aria-hidden="true"><span class="svg_ctrl"><svg class="svg_style" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path><path fill="none" d="M0 0h24v24H0z"></path></svg></span><span class="svg_frame"></span></div></div><div class="ex_det_con" aria-hidden="true"><div class="flex-base"><div class="w_100p"><div class="flex-base det_pad"><p class="marg_z_block typograph">${details}</p></div></div></div></div></div>',
+        list:[],
+        templateString: '<div id="mtd_${id}" class="ex_container flex-base justify-center"><div class="ex_inner">${rows}</div></div>',
+        templateRowString: '<div class="ex_row_frame" aria-expanded="false"><div class="ex_hdr_cont flex-base justify-center flex-align-items-cntr" tabindex="0" role="button" aria-expanded="false"><div class="ex_headings flex-base"><p class="marg_z_block typograph ex_head">${heading}</p><p class="marg_z_block typograph ex_sec_head">${secondary_heading}</p></div><div class="ex_svg_cont" tabindex="-1" role="button" aria-hidden="true"><span class="svg_ctrl"><svg class="svg_style" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path><path fill="none" d="M0 0h24v24H0z"></path></svg></span><span class="svg_frame"></span></div></div><div class="ex_det_con" aria-hidden="true"><div class="flex-base"><div class="w_100p"><div class="flex-base det_pad"><p class="marg_z_block typograph">${details}</p></div></div></div></div></div>',
         existing_id: '',
         orig_input: []
 	};
@@ -22,10 +21,9 @@ Author: Chris Ash
 	  // default values to reset globals between each run. This is in case of multiple uses on a single page.
   var _def = {
     id: '',
-    color_css_class: '',
-    color_css_style : '',
-    templateString: '<div class="ex_container flex-base justify-center"><div class="ex_inner">${rows}</div></div>',
-    templateRowString: '<div class="ex_row_frame" style="${override_css}" aria-expanded="false"><div class="ex_hdr_cont flex-base justify-center flex-align-items-cntr" tabindex="0" role="button" aria-expanded="false"><div class="ex_headings flex-base"><p class="marg_z_block typograph ex_head">${heading}</p><p class="marg_z_block typograph ex_sec_head">${secondaryHeading}</p></div><div class="ex_svg_cont" tabindex="-1" role="button" aria-hidden="true"><span class="svg_ctrl"><svg class="svg_style" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path><path fill="none" d="M0 0h24v24H0z"></path></svg></span><span class="svg_frame"></span></div></div><div class="ex_det_con" aria-hidden="true"><div class="flex-base"><div class="w_100p"><div class="flex-base det_pad"><p class="marg_z_block typograph">${details}</p></div></div></div></div></div>',
+    list:[],
+    templateString: '<div id="mtd_${id}" class="ex_container flex-base justify-center"><div class="ex_inner">${rows}</div></div>',
+    templateRowString: '<div class="ex_row_frame" aria-expanded="false"><div class="ex_hdr_cont flex-base justify-center flex-align-items-cntr" tabindex="0" role="button" aria-expanded="false"><div class="ex_headings flex-base"><p class="marg_z_block typograph ex_head">${heading}</p><p class="marg_z_block typograph ex_sec_head">${secondary_heading}</p></div><div class="ex_svg_cont" tabindex="-1" role="button" aria-hidden="true"><span class="svg_ctrl"><svg class="svg_style" focusable="false" viewBox="0 0 24 24" aria-hidden="true" role="presentation"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"></path><path fill="none" d="M0 0h24v24H0z"></path></svg></span><span class="svg_frame"></span></div></div><div class="ex_det_con" aria-hidden="true"><div class="flex-base"><div class="w_100p"><div class="flex-base det_pad"><p class="marg_z_block typograph">${details}</p></div></div></div></div></div>',
     existing_id: '',
     orig_input: []
 	}
@@ -84,7 +82,7 @@ Author: Chris Ash
             if ($.matd_expandlist.templateString != '' ) {
                 if ( $('#mtd_'+$.matd_expandlist.id).length == 0 ) {
                         // see if we're absorbing an existing input tag
-                        methods.check_target_type();
+                       // methods.check_target_type();
 
                         // fire init event
                         methods.trigger_evt($.matd_expandlist.id,'init','');
@@ -135,16 +133,42 @@ Author: Chris Ash
             return _val;
           },        
         make_html: function() {
-            $.matd_expandlist.on_off = ( $.matd_expandlist.toggled ? "true" : "false" );
+            $.matd_expandlist.disp_rows = [];
+            $.matd_expandlist.rows = '';
+            
+            var _data = $.matd_expandlist.list;
+            var _proc_data = function(_a_list) {
+                _a_list.forEach(function(_an_elm) {
+                    console.log(_an_elm);
+
+                    var _add_missing = function(_obj, _prop, _def) {
+                        if ( _obj.hasOwnProperty(_prop) == false ) _obj[_prop] = _def;
+                        return _obj;
+                    }
+                    _an_elm = _add_missing(_an_elm, 'secondary_heading','');
+                    _an_elm = _add_missing(_an_elm, 'override_css','');
+                    _an_elm = _add_missing(_an_elm, 'details','');
+
+                    _an_elm.row_html = methods.prp_ct($.matd_expandlist.templateRowString, _an_elm);
+
+                    console.log(_an_elm);
+
+                    // process detail
+                    $.matd_expandlist.rows += _an_elm.row_html;
+                });
+            }
+            var _f_data = _proc_data(_data);
 
             // make sure color style has a leading # if a hex
-            if ( $.matd_expandlist.color_css_style.toLowerCase().indexOf('rgb') == -1 ) {
-                $.matd_expandlist.color_css_style = methods.add_hash_hex( $.matd_expandlist.color_css_style);
-            } 
+            //if ( $.matd_expandlist.color_css_style.toLowerCase().indexOf('rgb') == -1 ) {
+            //    $.matd_expandlist.color_css_style = methods.add_hash_hex( $.matd_expandlist.color_css_style);
+            //} 
             
-            $.matd_expandlist.color_style = ( ( $.matd_expandlist.color_css_style != '' ) ? 'color: '+$.matd_expandlist.color_css_style+';' : '' );
+            //$.matd_expandlist.color_style = ( ( $.matd_expandlist.color_css_style != '' ) ? 'color: '+$.matd_expandlist.color_css_style+';' : '' );
 
       // this covers the base swaps
+            
+
 			var _html = methods.prp_ct($.matd_expandlist.templateString, $.matd_expandlist);
 			
       return _html;
@@ -166,23 +190,55 @@ Author: Chris Ash
       }
     },
     assign_event: function() {
-      var _what = $('#mtd_'+$.matd_expandlist.id);
+      var _what = $('#mtd_'+$.matd_expandlist.id + ' .ex_hdr_cont');
 			if ( $.matd_expandlist.existing_id != '' ) {
-				_what = $('#'+$.matd_expandlist.existing_id);
+				_what = $('#'+$.matd_expandlist.existing_id + ' .ex_hdr_cont');
 			}
 
 			var _loc_what = $(_what);
 			_loc_what.on('click',function(evt) {
-                var _this = $(this);
-                var _top = _this.parents('.swt_container');
-                var _frame = _top.find('.swt_frame');
-                var _dot = _top.find('.swt_dot');                
-                var _df = ( _frame.attr('data-flipped') == 'false' ) ? 'true' : 'false';
-                
-                _frame.attr('data-flipped',_df);
-                _dot.attr('data-flipped',_df);
-				methods.trigger_evt($.matd_expandlist.id,'flipped',_this,evt);
-			});
+
+                var _open_close = function(_a_target) {
+                    var _swap_a_expand = function(_a_elem) {
+                        if ( _a_elem.attr('aria-expanded') == 'true') {
+                            _a_elem.attr('aria-expanded','false');
+                        } else {
+                            _a_elem.attr('aria-expanded','true');
+                        }
+                    }
+                    var _set_one = function(_a_elem) {
+                        _a_elem.one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
+                            if ( _this.attr('aria-hidden') == 'true') {
+                                _this.attr('aria-hidden','false');
+                            } else {
+                                _this.attr('aria-hidden','true');
+                            }
+                        });                    
+                    } 
+    
+                    var _set_det = function(_a_elem) {
+                        if ( _a_elem.attr('aria-expanded') == 'true') {
+                            _a_elem.find('.ex_det_con').attr('style','min-height: 0px; height: 0px; transition-duration: 224ms;');
+                        } else {
+                            _a_elem.find('.ex_det_con').attr('style','min-height: 0px; height: '+_a_elem.find('.ex_det_con > div').height()+'px; transition-duration: 224ms;');
+                        }
+                    }
+
+                    _set_det(_a_target);
+                    _swap_a_expand(_a_target);
+                    _swap_a_expand(_a_target.find('.ex_hdr_cont'));  
+                    _set_one(_a_target.find('.ex_det_con'));
+                }
+
+                // close previous
+                _open_close( $(this).parents('.ex_inner').find('div.ex_row_frame[aria-expanded=true]') );
+
+                // open selected
+                var _this = $(this).parent('.ex_row_frame');
+                _open_close( $(this).parent('.ex_row_frame') );         
+
+				methods.trigger_evt($.matd_expandlist.id,'row_clicked',_this,evt);
+            });
     },
     trigger_evt: function(_who,_trigger, evt) {
 			$('#'+_who).trigger(_trigger,evt);
@@ -237,7 +293,7 @@ Author: Chris Ash
         if ( _alt_obj ) {
             _data_obj = _alt_obj;
         }
-
+        console.log('data obj = ',_data_obj);
         try {
             do {
                 var reNme = _nmeObj.exec(_template);
@@ -246,7 +302,7 @@ Author: Chris Ash
 
                     var _fnc = new Function("_tmpl","_newval","return _tmpl.replace(/\\${"+_tag+"}/ig, _newval);");
                     _template = _fnc(_template, _data_obj[_tag]);
-                    _fallback_counter++;
+                    _fallback_counter++;                    
                 } else {
                     _fallback_counter = 10;
                 }
