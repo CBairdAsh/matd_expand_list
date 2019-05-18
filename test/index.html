@@ -261,6 +261,36 @@
 	
 	
 	</div>	
+
+	<div class="zone_parent">
+		<div class="zone zone_left">
+			<h4>Sublists within sublists</h4>
+	
+			Perhaps extreme, this allows a different take on a tree list by having embedded collapsible expanded lists.
+			<br>
+			<pre>
+
+			</pre>
+	
+			A demo of this is shown here
+	
+			<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquet cursus cursus.
+			</p>
+			<div id="test5" class="demo_zone">
+			</div>
+			<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquet cursus cursus.
+			</p>
+	
+			<p>
+				<button onclick="start5()">Start Demo</button>
+			</p>
+		</div>
+		<hr>
+	
+	
+	</div>	
 	
 	<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="../src/matd_expandlist.js"></script>
@@ -310,6 +340,35 @@
 		"details":"A third link to <a href='//www.google.com' target='newwin'><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z'/></svg> Google</a>! ."}		 
 	 ]});
 	}	
+
+	function start5() {
+		$('#test5').matd_expandlist({"list":[
+		{"heading":"First row",
+		"secondary_heading": "This is a subheading for row 1",
+		"details":[
+			{"heading":"First sub row",
+			"secondary_heading": "This is a subheading for sub row 1 under 1",
+			"details":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."},
+			{"heading":"Second sub row",
+			"secondary_heading": "This is a subheading for sub row 2 under 1",
+			"details":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."}
+		]},
+		{"heading":"Second row",
+		"secondary_heading": "This is a subheading for row 2",
+		"details":"A second link to <a href='//www.google.com' target='newwin'><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M0 0h24v24H0z' fill='none'/><path d='M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z'/></svg> Google</a>! ."},
+		{"heading":"Third row",
+		"secondary_heading": "This is a subheading for row 3",
+		"details":[
+			{"heading":"First sub row",
+			"secondary_heading": "This is a subheading for sub row 1 under 3",
+			"details":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."},
+			{"heading":"Second sub row",
+			"secondary_heading": "This is a subheading for sub row 2 under 3",
+			"details":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."}
+		]}		 
+	 ]});
+	}
+
 
 	</script>
 	

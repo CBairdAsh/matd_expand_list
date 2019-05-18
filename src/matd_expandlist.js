@@ -139,8 +139,6 @@ Author: Chris Ash
             var _data = $.matd_expandlist.list;
             var _proc_data = function(_a_list) {
                 _a_list.forEach(function(_an_elm) {
-                    console.log(_an_elm);
-
                     var _add_missing = function(_obj, _prop, _def) {
                         if ( _obj.hasOwnProperty(_prop) == false ) _obj[_prop] = _def;
                         return _obj;
@@ -149,26 +147,30 @@ Author: Chris Ash
                     _an_elm = _add_missing(_an_elm, 'override_css','');
                     _an_elm = _add_missing(_an_elm, 'details','');
 
+                    if (typeof _an_elm.details == 'object') {
+                        var _temp_level = _proc_data(_an_elm.details);
+                        var _inner = {
+                            "id": "sub_" + $.matd_expandlist.id,
+                            "rows": ""
+                        }
+                        _temp_level.forEach(function(_an_elm) {
+                            _inner.rows += _an_elm.row_html;
+                        });
+                        _an_elm.details = methods.prp_ct($.matd_expandlist.templateString, _inner);
+                    }
+
                     _an_elm.row_html = methods.prp_ct($.matd_expandlist.templateRowString, _an_elm);
-
-                    console.log(_an_elm);
-
-                    // process detail
-                    $.matd_expandlist.rows += _an_elm.row_html;
                 });
+
+                return _a_list;              
             }
             var _f_data = _proc_data(_data);
 
-            // make sure color style has a leading # if a hex
-            //if ( $.matd_expandlist.color_css_style.toLowerCase().indexOf('rgb') == -1 ) {
-            //    $.matd_expandlist.color_css_style = methods.add_hash_hex( $.matd_expandlist.color_css_style);
-            //} 
-            
-            //$.matd_expandlist.color_style = ( ( $.matd_expandlist.color_css_style != '' ) ? 'color: '+$.matd_expandlist.color_css_style+';' : '' );
+            _f_data.forEach(function(_an_elm) {
+                $.matd_expandlist.rows += _an_elm.row_html;
+            });
 
-      // this covers the base swaps
-            
-
+            // this covers the base swaps
 			var _html = methods.prp_ct($.matd_expandlist.templateString, $.matd_expandlist);
 			
       return _html;
@@ -202,8 +204,10 @@ Author: Chris Ash
                     var _swap_a_expand = function(_a_elem) {
                         if ( _a_elem.attr('aria-expanded') == 'true') {
                             _a_elem.attr('aria-expanded','false');
+                            _a_elem.removeClass('active');
                         } else {
                             _a_elem.attr('aria-expanded','true');
+                            _a_elem.addClass('active');
                         }
                     }
                     var _set_one = function(_a_elem) {
@@ -230,13 +234,15 @@ Author: Chris Ash
                     _set_one(_a_target.find('.ex_det_con'));
                 }
 
-                // close previous
-                _open_close( $(this).parents('.ex_inner').find('div.ex_row_frame[aria-expanded=true]') );
-
-                // open selected
+                
                 var _this = $(this).parent('.ex_row_frame');
-                _open_close( $(this).parent('.ex_row_frame') );         
-
+                if ( _this.hasClass('active') == false ) {
+                    // close previous
+                    _open_close( $(this).parents('.ex_inner').find('div.ex_row_frame[aria-expanded=true]') );
+                }
+                
+                // open selected
+                _open_close( _this );
 				methods.trigger_evt($.matd_expandlist.id,'row_clicked',_this,evt);
             });
     },
@@ -293,7 +299,6 @@ Author: Chris Ash
         if ( _alt_obj ) {
             _data_obj = _alt_obj;
         }
-        console.log('data obj = ',_data_obj);
         try {
             do {
                 var reNme = _nmeObj.exec(_template);
