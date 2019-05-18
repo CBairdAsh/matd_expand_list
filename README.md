@@ -28,6 +28,36 @@ There are three main zones to an expanded list: the Header, Subheader and Detail
 
 All three support any type of content, even HTML tags. It is recommended that the rich experience ( images, html, etc ) be reserved for the detail area.
 
+An example would be:
+
+    {"list":[
+		{"heading":"First row",
+	 	 "secondary_heading": "This is a subheading for row 1",
+		 "details":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."},
+		{"heading":"Second row",
+		 "secondary_heading": "This is a subheading for row 2",
+   		 "details":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."},
+   		{"heading":"Third row",
+   		 "secondary_heading": "This is a subheading for row 3",
+  	 	 "details":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."} 	 
+	 ]}
+
+Which can be applied like so:
+
+var _param = {"list":[
+		{"heading":"First row",
+	 	 "secondary_heading": "This is a subheading for row 1",
+		 "details":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."},
+		{"heading":"Second row",
+		 "secondary_heading": "This is a subheading for row 2",
+   		 "details":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."},
+   		{"heading":"Third row",
+   		 "secondary_heading": "This is a subheading for row 3",
+  	 	 "details":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."} 	 
+	 ]};
+
+     $('#test3').matd_expandlist(_param);
+
 ### License
 
 Copyright (c) 2019 C. B. Ash
