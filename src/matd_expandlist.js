@@ -213,11 +213,12 @@ License: MIT License
                     }
                     var _set_one = function(_a_elem) {
                         _a_elem.one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
+                           /* var _this = $(this);
                             if ( _this.attr('aria-hidden') == 'true') {
                                 _this.attr('aria-hidden','false');
                             } else {
                                 _this.attr('aria-hidden','true');
-                            }
+                            }*/
                         });                    
                     } 
     
