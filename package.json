@@ -1,8 +1,8 @@
 {
   "name": "matd_expanded_list",
-  "version": "1.02",
+  "version": "1.03",
   "description": "Material Design Expanded List - a Javascript / jQuery based Material Design expanded list",
-  "main": "matd_textfield/src/matd_textfield.js",
+  "main": "matd_expand_list/src/matd_expandlist.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/CBairdAsh/matd_expand_list.git"
